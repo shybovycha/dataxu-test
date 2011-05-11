@@ -7,7 +7,7 @@ gem 'rails', '3.0.7'
 
 gem 'sqlite3'
 
-gem 'savon', '0.9.1'
+gem 'savon'#, '0.9.1'
 gem 'hpricot'
 gem 'httpclient'
 

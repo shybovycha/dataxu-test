@@ -3,4 +3,6 @@
 === TODO
 
     * pretty views
-    * 
+    * different data selection (e.g. Countries for Currency, etc.)
+    * collecting currencies (withic currency#show and country#show)
+    * initiaries
