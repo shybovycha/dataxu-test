@@ -103,7 +103,6 @@ class ApplicationController < ActionController::Base
       end
 
       flash[:info] = "Well, done!"
-begin
     rescue Exception => e
       logger.error e.message
 
