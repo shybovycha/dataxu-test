@@ -1,0 +1,12 @@
+<h1>Avaliable countries</h1>
+
+<% @countries.each do |country| %>
+  <div id="#{country.name}">
+    <%= link_to country.name, country %>
+  </div>
+<% end %>
+
+<br />
+
+<% if @countries.length <= 0 %>
+<% end %>

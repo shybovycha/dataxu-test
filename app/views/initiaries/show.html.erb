@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @initiary.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @initiary.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_initiary_path(@initiary) %> |
+<%= link_to 'Back', initiaries_path %>
