@@ -1,5 +1,6 @@
-=== dataxu test proejct
+= dataxu test proejct
 
-===== TODO
+=== TODO
 
-    * everything...
+    * pretty views
+    * 

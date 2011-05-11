@@ -7,8 +7,9 @@ gem 'rails', '3.0.7'
 
 gem 'sqlite3'
 
-gem 'savon'
+gem 'savon', '0.9.1'
 gem 'hpricot'
+gem 'httpclient'
 
 # Use unicorn as the web server
 # gem 'unicorn'
