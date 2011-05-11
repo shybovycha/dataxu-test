@@ -11,6 +11,8 @@ Dataxu::Application.routes.draw do
 
   resources :countries
 
+  match "update" => "application#update_country_data"
+
   root :to => "home#index"
 
   # The priority is based upon order of creation:

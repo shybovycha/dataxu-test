@@ -9,4 +9,6 @@
 <br />
 
 <% if @countries.length <= 0 %>
+  You've got no currencies nor countries data.
+  We recommend you to <%= link_to "update country and currency lists", :controller => "application", :action => "update_country_data" %> as soon as it's possible
 <% end %>

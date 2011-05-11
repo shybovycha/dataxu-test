@@ -3,26 +3,57 @@ class ApplicationController < ActionController::Base
   before_filter :auth?, :only => [:log_in]
 
   def update_country_data
-    client = Savon::Client.new "http://www.webservicex.net/country.asmx?WSDL"
+    begin
+      # setup Savon client for SOAP requests
+      client = Savon::Client.new "http://www.webservicex.net/country.asmx?WSDL"
 
-    resp = (client.request :get_countries)[:get_countries_response][:get_countries_result]
-    doc = Hpricot resp
-    
-    doc.search("table name").each do |c|
-      country = Country.new :name => c.inner_html
+      # get country list
+      resp = (client.request :get_countries)[:get_countries_response][:get_countries_result]
 
-      resp = client.request :get_currency_by_country do
-        #soap.body = {  }
+      # create XML SOAP response representation
+      doc = Hpricot resp
+
+      # get countries array
+      countries = doc.search("table name").uniq!
+
+      # assign currencies to each country
+      countries.each do |c|
+        # first, we should create a country model instance, of course
+        country = Country.new :name => c.inner_html
+        country.save
+
+        # somehow, Savon could not get any valid response using its simple interactions
+        # this should fix problem
+        resp = client.request :get_currency_by_country do
+          soap.xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">  <soap:Body>    <GetCurrencyByCountry xmlns=\"http://www.webserviceX.NET\">      <CountryName> #{ country.name } </CountryName>    </GetCurrencyByCountry>  </soap:Body></soap:Envelope>"
+        end
+
+        # create XML representation
+        doc2 = Hpricot resp.to_hash[:get_currency_by_country_response][:get_currency_by_country_result]
+
+        # get currency names array
+        currencies = (doc2.search("table currency").collect { |x| x.inner_html }).uniq
+
+        # attach each currency to current country
+        currencies.each do |e|
+          currency = Currency.new :name => e.name
+          currency.save
+
+          monetization = Monetization.new :country_id => country.id, :currency_id => currency.id
+          monetization.save
+        end
       end
 
-      #currency = Currency.new
+      flash[:info] = "Well, done!"
+    rescue Exception => e
+      logger.error e.message
+      logger.debug e.backtrace
 
-      #country.save
-      #currency.save
-      
-      #monetization = Monetization.new :country_id => country.id, :currency_id => currency.id
-      #monetization.save
+      flash[:errors] = [] if flash[:errors].nil?
+      flash[:errors] << "Oh, i'm sorry! Seems that some error annoyed me while trying to get country data. Please, try again in a few minutes..."
     end
+
+    redirect_to root_path
   end
   
   def log_out
@@ -32,7 +63,7 @@ class ApplicationController < ActionController::Base
 
   def log_in
     if authenticate(params[:username], params[:password])
-      flash[:notice] = "Error logging in"
+      flash[:error] = "Error logging in"
       redirect_to root_path
     else
       redirect_to root_path
