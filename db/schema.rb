@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(:version => 20110512160827) do
     t.integer  "currency_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "collected",   :default => 0
+    t.boolean  "collected",   :default => false
   end
 
 end

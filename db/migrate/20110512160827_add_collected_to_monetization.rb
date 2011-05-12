@@ -1,6 +1,6 @@
 class AddCollectedToMonetization < ActiveRecord::Migration
   def self.up
-    add_column :monetizations, :collected, :integer, :default => false
+    add_column :monetizations, :collected, :boolean, :default => false
     remove_column :currencies, :collected
   end
 

@@ -6,7 +6,8 @@
 </p>
 
 <p>
-  <b>Currencies:</b>
+  <b>Currencies:</b><br/>
+  <br />
   <% @country.currencies.each do |c| %>
     <%= link_to c.name, currency_path(c) %>
   <% end %>

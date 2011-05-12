@@ -6,9 +6,18 @@
 </p>
 
 <p>
-  <b>Avaliable at:</b>
+  <b>Avaliable at:</b><br/>
   <br/>
   <% @currency.countries.each do |c| %>
     <%= link_to c.name, c %>
   <% end %>
 </p>
+
+<% unless @visited.empty? %>
+  <p>
+    <b>Countries, visited for <%= @currency.name %>:</b>
+    <% @visited.each do |c| %>
+      <%= link_to c.name, c %>
+    <% end %>
+  </p>
+<% end %>

@@ -6,6 +6,8 @@
   <% end %>
   <br />
 <% end %>
+  
 <%= link_to "Avaliable countries", countries_path %><br />
 <%= link_to "Avaliable currencies", currencies_path %><br />
+<%= link_to "Avaliable currencies with countries unvisited", :controller => :currencies, :action => :remaining_index %><br />
 <%= link_to "Initiaries", initiaries_path %><br />

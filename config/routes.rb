@@ -12,6 +12,7 @@ Dataxu::Application.routes.draw do
   resources :countries
 
   match "update" => "application#update_country_data"
+  match "remaining_index" => "currencies#remaining_index"
 
   root :to => "home#index"
 
