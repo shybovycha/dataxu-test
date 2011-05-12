@@ -6,6 +6,9 @@
 </p>
 
 <p>
-  <b>Collected:</b>
-  <%= @currency.collected %>
+  <b>Avaliable at:</b>
+  <br/>
+  <% @currency.countries.each do |c| %>
+    <%= link_to c.name, c %>
+  <% end %>
 </p>

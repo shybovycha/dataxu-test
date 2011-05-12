@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110510103004) do
+ActiveRecord::Schema.define(:version => 20110512160827) do
 
   create_table "countries", :force => true do |t|
     t.string   "name"
@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(:version => 20110510103004) do
 
   create_table "currencies", :force => true do |t|
     t.string   "name"
-    t.boolean  "collected"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -44,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20110510103004) do
     t.integer  "currency_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "collected",   :default => 0
   end
 
 end
