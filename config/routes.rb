@@ -1,10 +1,4 @@
 Dataxu::Application.routes.draw do
-  get "home/index"
-
-  get "home/log_in"
-
-  get "home/log_out"
-
   resources :initiaries
 
   resources :currencies
@@ -13,6 +7,8 @@ Dataxu::Application.routes.draw do
 
   match "update" => "application#update_country_data"
   match "remaining_index" => "currencies#remaining_index"
+  match "log_in" => "application#log_in"
+  match "log_out" => "application#log_out"
 
   root :to => "home#index"
 

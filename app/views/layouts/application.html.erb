@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Dataxu</title>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
-  <%= csrf_meta_tag %>
-</head>
-<body>
+  <head>
+    <title>Dataxu</title>
+    <%= stylesheet_link_tag :all %>
+    <%= javascript_include_tag :defaults %>
+    <%= csrf_meta_tag %>
+  </head>
+  <body>
 
-<%= yield %>
+    <% if auth? %>
+      <%= link_to "Log out", :controller => :application, :action => :log_out %>
+    <% else %>
+      <%= link_to "Log in", :controller => :application, :action => :log_in %>
+    <% end %>
 
-</body>
+    <%= yield %>
+
+  </body>
 </html>

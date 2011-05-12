@@ -3,7 +3,7 @@ require 'hpricot'
 
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :auth?, :only => [:log_in]
+  before_filter :authenticate, :only => [:log_in]
 
   def update_country_data
     Thread.new {
@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
   end
 
   def log_in
-    if authenticate(params[:username], params[:password])
+    if authenticate
       flash[:error] = "Error logging in"
       redirect_to root_path
     else
@@ -60,18 +60,10 @@ class ApplicationController < ActionController::Base
 
   def authenticate
     authenticate_or_request_with_http_basic do |username, password|
-      moo(username, password)
+      r = (username == "moo" && password == "foo")
+      session[:uid] = r
+      return r
     end
-  end
-
-  def authenticate(u, p)
-    moo(u, p)
-  end
-
-  def moo(username, password)
-    r = (username == "moo" && password == "foo")
-    session[:uid] = r
-    return r
   end
 
   def encode(phrase)

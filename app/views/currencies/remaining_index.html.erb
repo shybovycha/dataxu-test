@@ -6,7 +6,11 @@
     <% remaining = (currency.monetizations.where :collected => false).count %>
     <% str = "Visited #{ visited } countries out of #{ remaining }" %>
 
-    <%= link_to currency.name, currency %>&nbsp;<%= str %>
+    <%= link_to currency.name, currency %>&nbsp;<%= str %>&nbsp;
+
+    <% if auth? %>
+      <%= link_to "Collect everything", :controller => :currencies, :action => :collect, :currency_id => currency.id %>
+    <% end %>
 
     <br/>
   <% end %>

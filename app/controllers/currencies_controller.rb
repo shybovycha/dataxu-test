@@ -15,8 +15,15 @@ class CurrenciesController < ApplicationController
   end
 
   def collect
-    m = Monetization.new :country_id => params[:country_id], :currency_id => params[:currency_id]
-    m.save
+    unless params[:country_id].nil?
+      (Monetization.where :currency_id => params[:currency_id], :country_id => params[:country_id]).each do |m|
+        m.update_attribute :collected => true
+      end
+    else
+      (Monetization.where :currency_id => params[:currency_id]).each do |m|
+        m.update_attribute :collected => true
+      end
+    end
 
     redirect_to :back
   end

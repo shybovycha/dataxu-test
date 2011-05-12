@@ -9,6 +9,10 @@
   <b>Currencies:</b><br/>
   <br />
   <% @country.currencies.each do |c| %>
-    <%= link_to c.name, currency_path(c) %>
+    <%= link_to c.name, currency_path(c) %>&nbsp;
+    
+    <% if auth? %>
+      <%= link_to "Collect everything", :controller => :countries, :action => :collect, :id => c.id %>
+    <% end %>
   <% end %>
 </p>

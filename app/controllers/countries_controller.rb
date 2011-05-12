@@ -10,13 +10,10 @@ class CountriesController < ApplicationController
   end
 
   def collect
-    country = Country.find(params[:id])
-
-    country.currencies.each do |c|
-      m = Monetization.new :country_id => country.id, :currency_id => c.id
-      m.save
+    (Monetization.where :country_id => params[:id]).each do |m|
+      m.update_attribute :collected => true
     end
-
+    
     redirect_to :back
   end
 
