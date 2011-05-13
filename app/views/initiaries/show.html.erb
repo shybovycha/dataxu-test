@@ -10,6 +10,14 @@
   <%= @initiary.description %>
 </p>
 
+<p>
+  <b>Countries included:</b><br />
+  <% @initiary.countries.each do |c| %>
+    <%= link_to c.name, c %><br />
+  <% end %>
+</p>
 
-<%= link_to 'Edit', edit_initiary_path(@initiary) %> |
-<%= link_to 'Back', initiaries_path %>
+<% if auth? %>
+  <%= link_to 'Edit', edit_initiary_path(@initiary) %> |
+  <%= link_to 'Back', initiaries_path %>
+<% end %>

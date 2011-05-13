@@ -25,6 +25,7 @@ class InitiariesController < ApplicationController
   # GET /initiaries/new.xml
   def new
     @initiary = Initiary.new
+    @countries = Country.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,7 +41,23 @@ class InitiariesController < ApplicationController
   # POST /initiaries
   # POST /initiaries.xml
   def create
+    #raise "breakpoint"
+    
     @initiary = Initiary.new(params[:initiary])
+    @initiary.save
+
+    params[:country].each do |c|
+      country = Country.find c
+      
+      r = Initiarization.new :country_id => country.id, :initiary_id => @initiary.id
+      r.save
+
+      monetizations = Monetization.where :country_id => country.id
+
+      monetizations.each do |m|
+        m.update_attribute :collected, true
+      end
+    end
 
     respond_to do |format|
       if @initiary.save

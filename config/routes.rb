@@ -1,10 +1,9 @@
 Dataxu::Application.routes.draw do
   resources :initiaries
-
   resources :currencies
-
   resources :countries
 
+  match "/currencies/:id/collect" => "countries#collect"
   match "update" => "application#update_country_data"
   match "remaining_index" => "currencies#remaining_index"
   match "log_in" => "application#log_in"

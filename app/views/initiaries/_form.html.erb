@@ -4,9 +4,9 @@
       <h2><%= pluralize(@initiary.errors.count, "error") %> prohibited this initiary from being saved:</h2>
 
       <ul>
-      <% @initiary.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+        <% @initiary.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
@@ -18,6 +18,15 @@
   <div class="field">
     <%= f.label :description %><br />
     <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    Countries visited:<br />
+    <% @countries.each do |c| %>
+      <% name = c.name.gsub(/\s/, '_') %>
+      <%= check_box_tag "country[]", c.id %>
+      <%= label_tag "country[#{c.id}]", c.name %>
+      <br />
+    <% end %>
   </div>
   <div class="actions">
     <%= f.submit %>
